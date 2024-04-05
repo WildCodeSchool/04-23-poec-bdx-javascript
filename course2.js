@@ -62,5 +62,6 @@ person.address = "adresse";
 delete person.address;
 person.age = 56;
 
+// Adam style
 const entries = Object.entries(person);
 console.log(entries);
