@@ -1,0 +1,6 @@
+#video-container {
+    display: flex;
+    gap: 2em;
+    justify-content: center;
+    padding: 4em 0;
+}
