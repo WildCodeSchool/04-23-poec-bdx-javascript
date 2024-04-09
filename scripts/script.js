@@ -1,33 +1,32 @@
-const video1 = {
-    thumbnailUrl: "../assets/images/thumbnail.webp",
-    title: "Aurevoir Youtube",
-    author: "Inoxtag",
-    viewsCount: "4.1 M",
-    publicationDate: "Il y a 3 jours",
-    channelLogo: "../assets/images/channel-logo.jpeg",
-    channelUrl: "https://www.youtube.com/@inoxtag"
-};
-const video2 = {
-    thumbnailUrl: "../assets/images/thumbnail.webp",
-    title: "Bonjour Youtube",
-    author: "Inoxtag",
-    viewsCount: "4.1 M",
-    publicationDate: "Il y a 3 jours",
-    channelLogo: "../assets/images/channel-logo.jpeg",
-    channelUrl: "https://www.youtube.com/@inoxtag"
-};
+import generateCard from "./create-card.js";
 
-const videoList = [video1, video2];
+async function main() {
 
-const videoContainerRef = document.querySelector("#video-container");
+    const videoList = await getData();
 
-for (const video of videoList) {
-    videoContainerRef.innerHTML += 
-    `
-    <div class="card">
-        <img src="${video.thumbnailUrl}">
-        <h3>${video.title}</h3>
-    </div>
-    `;
+    generateCard(videoList);
+    listenFromSearchThenFilter();
+
+}
+main();
+
+// Déclarations de mes fonctions
+
+
+async function getData() {
+    const result = await fetch("../assets/jsons/data.json");
+    const data = await result.json();
+    return data;
+}
+
+function listenFromSearchThenFilter() {
+    const videoContainerRef = document.querySelector("#video-container");
+    const inputSearchRef = document.querySelector("#input-search");
     
+    inputSearchRef.addEventListener("input", (e) => {
+        const searchedTerm = e.target.value;
+        const videoListFiltered = videoList.filter((video) => video.title.toLowerCase().includes(searchedTerm.toLowerCase()));
+        videoContainerRef.innerHTML = "";
+        generateCard(videoListFiltered);
+    });
 }
